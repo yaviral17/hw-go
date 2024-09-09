@@ -16,20 +16,15 @@ RUN go mod tidy
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
+# Copy wait-for-it script
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 # Build the Go app
 RUN go build -o main .
-
-# Stage 2: Run the Go application
-FROM alpine:latest
-
-# Set the Current Working Directory inside the container
-WORKDIR /app
-
-# Copy the pre-built binary file from the previous stage
-COPY --from=builder /app/main .
 
 # Expose port 6789 to the outside world
 EXPOSE 6789
 
 # Command to run the executable
-CMD ["./main"]
+CMD /wait-for-it.sh db:5432 -- ./main
