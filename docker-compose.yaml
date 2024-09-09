@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 services:
   db:
     image: postgres:12.1
@@ -23,6 +23,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      PRIVATE_KEY1: "x7edhuXGhd7ansd5mp9qEMwVpVoiemLY"
+      PRIVATE_KEY2: "0cc27f41-be0"
       POSTGRES_HOST: db
       PORT: 6789
 

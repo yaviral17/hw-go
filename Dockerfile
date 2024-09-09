@@ -1,6 +1,6 @@
 # Use the official Golang image as the base image
-FROM golang:1.22.2
-FROM postgres:12.1
+FROM golang:1.22.2 as builder
+# FROM postgres:12.1
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
