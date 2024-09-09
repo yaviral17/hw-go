@@ -20,7 +20,7 @@ COPY . .
 RUN go build -o main .
 
 # Stage 2: Run the Go application
-FROM alpine:latest
+FROM golang:1.22.2
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
