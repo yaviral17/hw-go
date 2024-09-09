@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"github.com/yaviral17/hw-go/db"
 	"github.com/yaviral17/hw-go/myLogs"
 	"github.com/yaviral17/hw-go/routes"
@@ -17,7 +18,13 @@ func main() {
 	// if godotenv.Load() != nil {
 	// 	myLogs.MyErrorLog("Error loading .env file")
 	// 	// return
-	// }
+	// }// Conditionally load .env file only in development
+	if os.Getenv("ENV") == "development" {
+		if err := godotenv.Load(); err != nil {
+			myLogs.MyErrorLog("Error loading .env file")
+			return
+		}
+	}
 
 	dbPort := os.Getenv("POSTGRES_PORT")
 	dbUser := os.Getenv("POSTGRES_USER")
