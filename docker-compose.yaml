@@ -11,13 +11,19 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
     ports:
       - "5454:6789"
     depends_on:
-      - db
+      db: 
+        condition: service_healthy
     environment:
       POSTGRES_PORT: 5432
       POSTGRES_USER: ${POSTGRES_USER}
