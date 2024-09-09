@@ -1,4 +1,3 @@
-
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE user_gender AS ENUM ('Male','Female','Non-binary','Other');
@@ -19,7 +18,7 @@ CREATE TABLE "user" (
   "work_score" integer DEFAULT 0,
   "total_work_score" integer DEFAULT 1,
   "bio" varchar,
-  "profile_picture" varchar,
+  "profile_picture" varchar DEFAULT '',
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now()),
   "gender" user_gender NOT NULL,

@@ -1,27 +1,35 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"github.com/yaviral17/hw-go/db"
 	"github.com/yaviral17/hw-go/myLogs"
+	"github.com/yaviral17/hw-go/routes"
 )
 
 func main() {
 
-	dbUrl := os.Getenv("DATABASE_URL")
+	if godotenv.Load() != nil {
+		myLogs.MyErrorLog("Error loading .env file")
+		return
+	}
 
+	dbUrl := os.Getenv("DATABASE_URL")
+	log.Println("DATABASE_URL: ", dbUrl)
 	port := os.Getenv("PORT")
 
 	if dbUrl == "" {
 		myLogs.MyErrorLog("DATABASE_URL environment variable is not set")
 		return
 	}
-
 	// Initialize the database connection
 	err := db.InitDB(dbUrl)
+
 	if err != nil {
 		myLogs.MyErrorLog("Failed to connect to the database")
 		return
@@ -33,8 +41,14 @@ func main() {
 	apiRouter.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Welcome to the API"))
 	})
+
+	// auth routes
+	apiRouter.HandleFunc("/auth/login", routes.Login).Methods("POST")
+	apiRouter.HandleFunc("/auth/register", routes.Register).Methods("POST")
+
 	// Apply the logging middleware to the router
 	loggedRouter := myLogs.LoggingMiddleware(router)
+	log.Println("Server running on port: ", port)
 
 	http.ListenAndServe("0.0.0.0:"+port, loggedRouter) // Start the server
 }
