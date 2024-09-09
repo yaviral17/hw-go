@@ -17,7 +17,7 @@ func main() {
 
 	if godotenv.Load() != nil {
 		myLogs.MyErrorLog("Error loading .env file")
-		return
+		// return
 	}
 
 	dbPort := os.Getenv("POSTGRES_PORT")
