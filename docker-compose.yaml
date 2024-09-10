@@ -26,11 +26,11 @@ services:
         condition: service_healthy
     environment:
       POSTGRES_PORT: 5432
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test1234
-      POSTGRES_DB: testdb
-      PRIVATE_KEY1: "x7edhuXGhd7ansd5mp9qEMwVpVoiemLY"
-      PRIVATE_KEY2: "0cc27f41-be0"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PRIVATE_KEY1: ${PRIVATE_KEY1}
+      PRIVATE_KEY2: ${PRIVATE_KEY2}
       POSTGRES_HOST: db
       PORT: 6789
 
